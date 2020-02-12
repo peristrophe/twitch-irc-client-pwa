@@ -20,32 +20,6 @@
           </v-row>
         </div>
       </v-container>
-      <!--
-      <v-container>
-        <v-row
-          v-for="(comment, index) in commentData"
-          :key="index"
-          align-content="center"
-          align="center"
-          dense
-        >
-          <v-col>
-            <v-card
-              elevation=20
-              max-width=500
-              flat
-            >
-              <v-card-text class="text-left">
-                {{ comment.body }}
-              </v-card-text>
-              <v-card-subtitle class="text-right">
-                {{ comment.user }}
-              </v-card-subtitle>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-      -->
     </v-content>
 
     <v-footer

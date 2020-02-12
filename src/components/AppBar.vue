@@ -163,11 +163,6 @@ export default {
       this.$idToken = {}
       document.location.hash = ""
       document.location.reload()
-      //if (Object.keys(this.$route.params).indexOf("channel") == -1) {
-      //  this.$router.go({ name: this.$route.name, force: true})
-      //} else {
-      //  this.$router.go({ name: this.$route.name, params: { channel: this.$route.params.channel }, force: true})
-      //}
     }
   },
   computed: {
