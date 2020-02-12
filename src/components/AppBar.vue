@@ -8,7 +8,7 @@
 
     <v-toolbar-title>{{ $route.name }}</v-toolbar-title>
 
-    <template v-if="$route.path == '/'">
+    <template v-if="$route.name == 'Chat'">
       <v-spacer></v-spacer>
 
       <v-tooltip left>
@@ -53,17 +53,17 @@
         </v-list-item>
 
         <v-list-item
-          :href="$router.resolve({ name: 'Chat' }).href"
+          :href="$router.resolve({ name: 'Chat', params: { channel: 'EMPTY' } }).href"
         >
           <v-list-item-icon><v-icon>mdi-chat</v-icon></v-list-item-icon>
           <v-list-item-title>Chat</v-list-item-title>
         </v-list-item>
 
         <v-list-item
-          :href="$router.resolve({ name: 'Streams' }).href"
+          :href="$router.resolve({ name: 'Home' }).href"
         >
-          <v-list-item-icon><v-icon>mdi-wifi</v-icon></v-list-item-icon>
-          <v-list-item-title>Stream Catalog</v-list-item-title>
+          <v-list-item-icon><v-icon>mdi-home</v-icon></v-list-item-icon>
+          <v-list-item-title>Home</v-list-item-title>
         </v-list-item>
 
       </v-list-item-group>
