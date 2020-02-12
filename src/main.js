@@ -11,12 +11,13 @@ Vue.prototype.$http = axios
 Vue.prototype.$base64url = base64url
 
 Vue.prototype.$scheme = {
-  main: "indigo lighten-2",
+  //main: "indigo lighten-2",
+  main: "orange",
   fore: "white",
 }
 
 Vue.prototype.$idToken = {}
-Vue.prototype.$accessToken = ''
+Vue.prototype.$accessToken = ""
 Vue.prototype.$userProfile = {
   id: "",
   loginName: "justinfan12345",

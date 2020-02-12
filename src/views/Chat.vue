@@ -51,6 +51,7 @@
     <v-footer
       app
       :color="$scheme.main"
+      elevation=24
     >
       <v-text-field
         outlined
@@ -125,7 +126,7 @@ export default {
         value.map(
           function (value) {
             var dict = {}
-            dict[value.split('=')[0]] = value.split('=')[1]
+            dict[value.split('=')[0]] = value.substr(value.indexOf('=')+1)
             return dict
           }
         )

@@ -32,7 +32,7 @@
 
   <v-navigation-drawer
     v-model="drawer"
-    absolute
+    fixed
     temporary
   >
     <v-list
@@ -40,8 +40,27 @@
       dense
     >
       <v-list-item-group>
-        <v-list-item>
-          <v-list-item-icon><v-icon>mdi-account</v-icon></v-list-item-icon>
+        <v-list-item
+          v-if="isLogedIn"
+          @click="logOut"
+        >
+          <v-list-item-icon>
+            <v-avatar
+              size=24
+            >
+              <img :src="$userProfile.picture" :alt="$userProfile.displayName"/>
+            </v-avatar>
+          </v-list-item-icon>
+          <v-list-item-title>Logout</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item
+          v-else
+          :href="authURL"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-icon>
           <v-list-item-title>Login</v-list-item-title>
         </v-list-item>
 
@@ -50,14 +69,6 @@
         >
           <v-list-item-icon><v-icon>mdi-magnify</v-icon></v-list-item-icon>
           <v-list-item-title>Channel</v-list-item-title>
-        </v-list-item>
-
-        <v-list-item
-          :disabled="isChat"
-          :href="$router.resolve({ name: 'Chat', params: { channel: 'EMPTY' } }).href"
-        >
-          <v-list-item-icon><v-icon>mdi-chat</v-icon></v-list-item-icon>
-          <v-list-item-title>Chat</v-list-item-title>
         </v-list-item>
 
         <v-list-item
@@ -104,7 +115,7 @@
         <v-btn
           color="green darken-1"
           text
-          @click="dialog = false"
+          @click="joinChannel"
         >
           Connect
         </v-btn>
@@ -115,22 +126,82 @@
 </template>
 
 <script>
-  export default {
-    name: 'AppBar',
+export default {
+  name: "AppBar",
 
-    data: () => ({
-      autoScroll: true,
-      channel: '',
-      drawer: false,
-      dialog: false,
-    }),
-    computed: {
-      isChat: function () {
-        return this.$route.name == 'Chat' ? true : false
-      },
-      isHome: function () {
-        return this.$route.name == 'Home' ? true : false
+  data: () => ({
+    autoScroll: true,
+    channel: "",
+    drawer: false,
+    dialog: false,
+
+    authParams: {
+      client_id: "122xg9vquuuq3zi6w610iibumg5j15",
+      redirect_uri: location.href.split("#")[0].split("?")[0],
+      response_type: [ "token", "id_token" ],
+      scope: [ "chat:read", "chat:edit", "user:read:email", "openid" ],
+      claims: {
+        id_token: {
+          email_verified: null,
+          picture: null,
+          preferred_username: null
+        }
       }
     }
+  }),
+  methods: {
+    joinChannel: function () {
+      this.$router.push({ name: "Chat", params: { channel: this.channel } })
+    },
+    logOut: function () {
+      this.drawer = false
+      this.$userProfile.id = ""
+      this.$userProfile.loginName = "justinfan12345"
+      this.$userProfile.displayName = "Anonymous User"
+      this.$userProfile.picture = ""
+      this.$accessToken = ""
+      this.$idToken = {}
+      document.location.hash = ""
+      document.location.reload()
+      //if (Object.keys(this.$route.params).indexOf("channel") == -1) {
+      //  this.$router.go({ name: this.$route.name, force: true})
+      //} else {
+      //  this.$router.go({ name: this.$route.name, params: { channel: this.$route.params.channel }, force: true})
+      //}
+    }
+  },
+  computed: {
+    isChat: function () {
+      return this.$route.name == "Chat" ? true : false
+    },
+    isHome: function () {
+      return this.$route.name == "Home" ? true : false
+    },
+    authURL: function () {
+      return `https://id.twitch.tv/oauth2/authorize?${this.queryParams}`
+    },
+    isLogedIn: function () {
+      if (this.$userProfile.id === "") {
+        return false
+      } else {
+        return true
+      }
+    },
+    queryParams: function () {
+      const params = this.authParams
+
+      function serialize (key) {
+        if (Object.prototype.toString.call(params[key]).indexOf("Array") != -1) {
+          return key + "=" + params[key].join("+")
+        } else if (Object.prototype.toString.call(params[key]).indexOf("Object") != -1) {
+          return key + "=" + JSON.stringify(params[key])
+        } else {
+          return key + "=" + params[key]
+        }
+      }
+
+      return Object.keys(this.authParams).map(serialize).join("&")
+    }
   }
+}
 </script>
