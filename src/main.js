@@ -6,6 +6,11 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+Vue.prototype.$scheme = {
+  main: "indigo lighten-2",
+  fore: "white",
+}
+
 new Vue({
   vuetify,
   router,
