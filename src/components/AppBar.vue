@@ -12,33 +12,20 @@
       <v-spacer></v-spacer>
 
       <v-tooltip left>
-      <template v-slot:activator="{ on }">
-      <v-btn
-        v-model="autoScroll"
-        @click="autoScroll = !autoScroll"
-        :color="$scheme.main"
-        depressed
-        v-on="on"
-      >
-        <v-icon>mdi-transfer-down</v-icon>
-      </v-btn>
-      </template>
-      <span>Auto Scroll</span>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            v-model="autoScroll"
+            @click="autoScroll = !autoScroll"
+            :color="$scheme.main"
+            depressed
+            v-on="on"
+          >
+            <v-icon>mdi-transfer-down</v-icon>
+          </v-btn>
+        </template>
+      
+        <span>Auto Scroll</span>
       </v-tooltip>
-      <!--
-      <v-btn-toggle
-        v-model="autoScroll"
-        borderless
-        :background-color="$scheme.main"
-        dense
-      >
-        <v-btn
-          :color="$scheme.main"
-        >
-          <v-icon medium :color="$scheme.fore">mdi-transfer-down</v-icon>
-        </v-btn>
-      </v-btn-toggle>
-      -->
     </template>
 
   </v-app-bar>
