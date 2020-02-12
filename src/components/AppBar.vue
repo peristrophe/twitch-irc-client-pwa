@@ -53,6 +53,7 @@
         </v-list-item>
 
         <v-list-item
+          :disabled="isChat"
           :href="$router.resolve({ name: 'Chat', params: { channel: 'EMPTY' } }).href"
         >
           <v-list-item-icon><v-icon>mdi-chat</v-icon></v-list-item-icon>
@@ -60,6 +61,7 @@
         </v-list-item>
 
         <v-list-item
+          :disabled="isHome"
           :href="$router.resolve({ name: 'Home' }).href"
         >
           <v-list-item-icon><v-icon>mdi-home</v-icon></v-list-item-icon>
@@ -122,5 +124,13 @@
       drawer: false,
       dialog: false,
     }),
+    computed: {
+      isChat: function () {
+        return this.$route.name == 'Chat' ? true : false
+      },
+      isHome: function () {
+        return this.$route.name == 'Home' ? true : false
+      }
+    }
   }
 </script>
