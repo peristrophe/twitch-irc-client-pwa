@@ -163,7 +163,7 @@ export default {
       this.$userProfile.pass = ""
       this.$userProfile.idToken = {}
       document.location.hash = ""
-      document.location.reload()
+      this.goHome()
     },
     goHome: function () {
       this.$router.push({ name: "Home" })
