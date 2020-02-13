@@ -11,7 +11,7 @@ Vue.prototype.$http = axios
 Vue.prototype.$base64url = base64url
 
 Vue.prototype.$scheme = {
-  main: "orange",
+  main: "grey lighten-4",
   fore: "white",
 }
 
