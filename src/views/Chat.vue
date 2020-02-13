@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppBar/>
+    <AppBar v-on:switch-auto-scroll="switchAutoScroll"/>
     
     <v-content>
       <v-container>
@@ -51,7 +51,8 @@ export default {
   name: 'Chat',
   data: () => ({
     msgs: [],
-    wss: null
+    wss: null,
+    autoScrollFlag: true
   }),
   props: {
     channel: String
@@ -65,6 +66,12 @@ export default {
     }
   },
   methods: {
+    switchAutoScroll: function (value) {
+      this.autoScrollFlag = value
+    },
+    autoScroll: function () {
+      window.scrollTo(0, document.body.clientHeight)
+    },
     sendMessage: function () {
       void(0)
     },
@@ -117,6 +124,13 @@ export default {
           }
         }
       )
+    }
+  },
+  watch: {
+    msgs: function () {
+      if (this.autoScrollFlag) {
+        window.setTimeout(this.autoScroll, 100)
+      }
     }
   }
 }

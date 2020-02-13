@@ -197,6 +197,11 @@ export default {
 
       return Object.keys(this.authParams).map(serialize).join("&")
     }
+  },
+  watch: {
+    autoScroll: function () {
+      this.$emit('switch-auto-scroll', this.autoScroll)
+    }
   }
 }
 </script>
