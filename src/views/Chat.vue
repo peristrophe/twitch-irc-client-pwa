@@ -27,21 +27,27 @@
       :color="$scheme.main"
       elevation=24
     >
-      <v-text-field
-        v-model="userMessage"
-        :disabled="!isLogedIn"
-        outlined
-        dense
-        rounded
-        hide-details
-        clearable
-        label="Your Message"
-        :color="$scheme.fore"
-        prepend-inner-icon="mdi-chat"
-        append-outer-icon="mdi-telegram"
-        @click:append-outer="sendMessage"
-      >
-      </v-text-field>
+      <v-container>
+        <v-row dense class="justify-center">
+          <v-col sm=6 md=6 lg=6 xl=6 cols=12>
+            <v-text-field
+              v-model="userMessage"
+              :disabled="!isLogedIn"
+              light
+              outlined
+              dense
+              rounded
+              hide-details
+              clearable
+              label="Your Message"
+              prepend-inner-icon="mdi-chat"
+              append-outer-icon="mdi-telegram"
+              @click:append-outer="sendMessage"
+            >
+            </v-text-field>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-footer>
   </div>
 </template>

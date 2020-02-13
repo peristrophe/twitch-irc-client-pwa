@@ -66,7 +66,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background-color: #D7CCC8;
+  background-color: #EEEEEE;
 }
 
 #nav {
