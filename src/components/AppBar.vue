@@ -8,7 +8,7 @@
 
     <v-toolbar-title>{{ $route.name }}</v-toolbar-title>
 
-    <template v-if="$route.name == 'Chat'">
+    <template v-if="isChat">
       <v-spacer></v-spacer>
 
       <v-tooltip left>
@@ -96,6 +96,7 @@
           outlined
           dense
           persistent-hint
+          autofocus
           label="Channel"
           hint="In lowercase."
           append-icon="mdi-magnify"
@@ -137,7 +138,7 @@ export default {
 
     authParams: {
       client_id: "122xg9vquuuq3zi6w610iibumg5j15",
-      redirect_uri: location.href.split("#")[0].split("?")[0],
+      redirect_uri: location.origin + "/",
       response_type: [ "token", "id_token" ],
       scope: [ "chat:read", "chat:edit", "user:read:email", "openid" ],
       claims: {
@@ -172,15 +173,15 @@ export default {
     isHome: function () {
       return this.$route.name == "Home" ? true : false
     },
-    authURL: function () {
-      return `https://id.twitch.tv/oauth2/authorize?${this.queryParams}`
-    },
     isLogedIn: function () {
       if (this.$userProfile.id === "") {
         return false
       } else {
         return true
       }
+    },
+    authURL: function () {
+      return `https://id.twitch.tv/oauth2/authorize?${this.queryParams}`
     },
     queryParams: function () {
       const params = this.authParams
@@ -196,6 +197,11 @@ export default {
       }
 
       return Object.keys(this.authParams).map(serialize).join("&")
+    }
+  },
+  watch: {
+    autoScroll: function () {
+      this.$emit('switch-auto-scroll', this.autoScroll)
     }
   }
 }

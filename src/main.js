@@ -15,13 +15,13 @@ Vue.prototype.$scheme = {
   fore: "white",
 }
 
-Vue.prototype.$idToken = {}
-Vue.prototype.$accessToken = ""
 Vue.prototype.$userProfile = {
   id: "",
   loginName: "justinfan12345",
   displayName: "Anonymous User",
   picture: "",
+  pass: "",
+  idToken: ""
 }
 
 Vue.config.productionTip = false

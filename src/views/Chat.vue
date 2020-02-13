@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppBar/>
+    <AppBar v-on:switch-auto-scroll="switchAutoScroll"/>
     
     <v-content>
       <v-container>
@@ -28,6 +28,8 @@
       elevation=24
     >
       <v-text-field
+        v-model="userMessage"
+        :disabled="!isLogedIn"
         outlined
         dense
         rounded
@@ -51,7 +53,9 @@ export default {
   name: 'Chat',
   data: () => ({
     msgs: [],
-    wss: null
+    wss: null,
+    userMessage: '',
+    autoScrollFlag: true,
   }),
   props: {
     channel: String
@@ -65,8 +69,16 @@ export default {
     }
   },
   methods: {
+    switchAutoScroll: function (value) {
+      this.autoScrollFlag = value
+    },
+    autoScroll: function () {
+      window.scrollTo(0, document.body.clientHeight)
+    },
     sendMessage: function () {
-      void(0)
+      if (this.wss != null && this.userMessage != "") {
+        this.wss.send(`PRIVMSG #${this.$props.channel} :${this.userMessage}`)
+      }
     },
     connect: function () {
       const self = this
@@ -76,7 +88,7 @@ export default {
 
       self.wss.onopen = function () {
         self.wss.send('CAP REQ :twitch.tv/tags twitch.tv/commands\r\n')
-        self.wss.send(`PASS oauth:${self.$accessToken}\r\n`)
+        self.wss.send(`PASS oauth:${self.$userProfile.pass}\r\n`)
         self.wss.send(`NICK ${self.$userProfile.loginName}\r\n`)
         self.wss.send(`JOIN #${self.$props.channel}\r\n`)
       }
@@ -91,6 +103,13 @@ export default {
     }
   },
   computed: {
+    isLogedIn: function () {
+      if (this.$userProfile.id === "") {
+        return false
+      } else {
+        return true
+      }
+    },
     privmsgs: function () {
       return this.msgs.filter(
         (value) => (value.match(/PRIVMSG/))
@@ -117,6 +136,13 @@ export default {
           }
         }
       )
+    }
+  },
+  watch: {
+    msgs: function () {
+      if (this.autoScrollFlag) {
+        window.setTimeout(this.autoScroll, 100)
+      }
     }
   }
 }
