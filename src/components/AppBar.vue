@@ -73,7 +73,7 @@
 
         <v-list-item
           :disabled="isHome"
-          :href="$router.resolve({ name: 'Home' }).href"
+          @click="goHome"
         >
           <v-list-item-icon><v-icon>mdi-home</v-icon></v-list-item-icon>
           <v-list-item-title>Home</v-list-item-title>
@@ -164,6 +164,9 @@ export default {
       this.$idToken = {}
       document.location.hash = ""
       document.location.reload()
+    },
+    goHome: function () {
+      this.$router.push({ name: "Home" })
     }
   },
   computed: {
