@@ -8,7 +8,7 @@
 
     <v-toolbar-title>{{ $route.name }}</v-toolbar-title>
 
-    <template v-if="$route.name == 'Chat'">
+    <template v-if="isChat">
       <v-spacer></v-spacer>
 
       <v-tooltip left>
@@ -172,15 +172,15 @@ export default {
     isHome: function () {
       return this.$route.name == "Home" ? true : false
     },
-    authURL: function () {
-      return `https://id.twitch.tv/oauth2/authorize?${this.queryParams}`
-    },
     isLogedIn: function () {
       if (this.$userProfile.id === "") {
         return false
       } else {
         return true
       }
+    },
+    authURL: function () {
+      return `https://id.twitch.tv/oauth2/authorize?${this.queryParams}`
     },
     queryParams: function () {
       const params = this.authParams
