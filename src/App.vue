@@ -21,7 +21,7 @@ export default {
         this.$userProfile.pass = this.hashValues.access_token
         this.$userProfile.idToken = this.decodedIdToken
 
-        var customHeader = { headers: {'Authorization': `Bearer ${this.$accessToken}`} }
+        var customHeader = { headers: {'Authorization': `Bearer ${this.$userProfile.pass}`} }
         this.$http.get(`https://api.twitch.tv/helix/users?id=${this.$userProfile.id}`, customHeader)
                   .then(response => (this.$userProfile.loginName = response.data.data[0].login))
       }
@@ -66,6 +66,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: #D7CCC8;
 }
 
 #nav {
