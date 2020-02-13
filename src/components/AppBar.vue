@@ -160,8 +160,8 @@ export default {
       this.$userProfile.loginName = "justinfan12345"
       this.$userProfile.displayName = "Anonymous User"
       this.$userProfile.picture = ""
-      this.$accessToken = ""
-      this.$idToken = {}
+      this.$userProfile.pass = ""
+      this.$userProfile.idToken = {}
       document.location.hash = ""
       document.location.reload()
     },
