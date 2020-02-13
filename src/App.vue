@@ -15,12 +15,11 @@ export default {
   methods: {
     storeProfile: function () {
       if (this.hasValidHash) {
-        this.$accessToken = this.hashValues.access_token
-        this.$idToken = this.decodedIdToken
-
         this.$userProfile.id = this.decodedIdToken.sub
         this.$userProfile.picture = this.decodedIdToken.picture
         this.$userProfile.displayName = this.decodedIdToken.preferred_username
+        this.$userProfile.pass = this.hashValues.access_token
+        this.$userProfile.idToken = this.decodedIdToken
 
         var customHeader = { headers: {'Authorization': `Bearer ${this.$accessToken}`} }
         this.$http.get(`https://api.twitch.tv/helix/users?id=${this.$userProfile.id}`, customHeader)

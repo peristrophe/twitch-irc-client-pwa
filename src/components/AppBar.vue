@@ -138,7 +138,7 @@ export default {
 
     authParams: {
       client_id: "122xg9vquuuq3zi6w610iibumg5j15",
-      redirect_uri: location.href.split("#")[0].split("?")[0],
+      redirect_uri: location.origin + "/",
       response_type: [ "token", "id_token" ],
       scope: [ "chat:read", "chat:edit", "user:read:email", "openid" ],
       claims: {
