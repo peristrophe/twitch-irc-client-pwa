@@ -96,6 +96,7 @@
           outlined
           dense
           persistent-hint
+          autofocus
           label="Channel"
           hint="In lowercase."
           append-icon="mdi-magnify"
