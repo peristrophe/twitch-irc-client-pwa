@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/twitch-irc-client-pwa/css/about.css"
   },
   {
-    "revision": "98b7ff1849cc1e9a6f91",
+    "revision": "2ea7e0e07b07ed06869b",
     "url": "/twitch-irc-client-pwa/css/app.css"
   },
   {
@@ -20,7 +20,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/twitch-irc-client-pwa/js/about.js"
   },
   {
-    "revision": "98b7ff1849cc1e9a6f91",
+    "revision": "2ea7e0e07b07ed06869b",
     "url": "/twitch-irc-client-pwa/js/app.js"
   },
   {
