@@ -138,7 +138,7 @@ export default {
 
     authParams: {
       client_id: "122xg9vquuuq3zi6w610iibumg5j15",
-      redirect_uri: location.origin + "/",
+      redirect_uri: `${location.origin}/twitch-irc-client-pwa/`,
       response_type: [ "token", "id_token" ],
       scope: [ "chat:read", "chat:edit", "user:read:email", "openid" ],
       claims: {
