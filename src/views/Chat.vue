@@ -84,8 +84,9 @@ export default {
     sendMessage: function () {
       if (this.wss != null && this.userMessage != "") {
         this.wss.send(`PRIVMSG #${this.$props.channel} :${this.userMessage}`)
+        this.msgs.push(`display-name=${this.$userProfile.displayName};user-type=:PRIVMSG:${this.userMessage}`)
+        this.userMessage = ""
       }
-      this.userMessage = ""
     },
     connect: function () {
       const self = this
