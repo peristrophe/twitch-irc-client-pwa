@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "434af8995fabc619ecda",
+    "revision": "78acc492d8471869979a",
     "url": "/twitch-irc-client-pwa/css/about.css"
   },
   {
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/twitch-irc-client-pwa/index.html"
   },
   {
-    "revision": "434af8995fabc619ecda",
+    "revision": "78acc492d8471869979a",
     "url": "/twitch-irc-client-pwa/js/about.js"
   },
   {
@@ -28,7 +28,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/twitch-irc-client-pwa/js/chunk-vendors.js"
   },
   {
-    "revision": "1c95d49125af92ec9f48f362e9ef693f",
+    "revision": "496c1ceec1173bbb1b06081c2d6edc50",
     "url": "/twitch-irc-client-pwa/manifest.json"
   },
   {
