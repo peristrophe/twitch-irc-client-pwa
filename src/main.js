@@ -9,6 +9,11 @@ import base64url from "base64url"
 
 Vue.prototype.$http = axios
 Vue.prototype.$base64url = base64url
+Vue.prototype.$playSound = (src, volume = 1.0) => {
+  var audio = new Audio(src)
+  audio.volume = volume
+  audio.play()
+}
 
 Vue.prototype.$scheme = {
   main: "grey lighten-4",
