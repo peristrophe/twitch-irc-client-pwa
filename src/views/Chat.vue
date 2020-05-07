@@ -1,6 +1,30 @@
 <template>
   <div class="chat">
-    <AppBar v-on:switch-auto-scroll="switchAutoScroll"/>
+    <AppBar>
+
+      <v-spacer></v-spacer>
+
+      <v-btn
+        @click="soundVolume = applyVolume"
+        :color="$scheme.main"
+        depressed
+      >
+        <v-icon v-if="soundVolume.level === 0">mdi-volume-off</v-icon>
+        <v-icon v-else-if="soundVolume.level === 1">mdi-volume-low</v-icon>
+        <v-icon v-else-if="soundVolume.level === 2">mdi-volume-medium</v-icon>
+        <v-icon v-else>mdi-volume-high</v-icon>
+      </v-btn>
+
+      <v-btn
+        @click="autoScrollFlag = !autoScrollFlag"
+        :color="$scheme.main"
+        depressed
+      >
+        <v-icon v-if="autoScrollFlag">mdi-download</v-icon>
+        <v-icon v-else>mdi-download-off</v-icon>
+      </v-btn>
+
+    </AppBar>
     
     <v-content>
       <v-container>
@@ -53,7 +77,9 @@
 </template>
 
 <script>
-import AppBar from '@/components/AppBar';
+import AppBar from '@/components/AppBar'
+import SndMsgSE from '@/assets/sounds/SoundEffect001.mp3'
+import RcvMsgSE from '@/assets/sounds/SoundEffect002.mp3'
 
 export default {
   name: 'Chat',
@@ -62,6 +88,14 @@ export default {
     wss: null,
     userMessage: '',
     autoScrollFlag: true,
+
+    soundVolume: { level: 3, volume: .9 },
+    volumeLevel: [
+      { level: 0, volume: .0 },
+      { level: 1, volume: .3 },
+      { level: 2, volume: .6 },
+      { level: 3, volume: .9 },
+    ]
   }),
   props: {
     channel: String
@@ -75,9 +109,6 @@ export default {
     }
   },
   methods: {
-    switchAutoScroll: function (value) {
-      this.autoScrollFlag = value
-    },
     autoScroll: function () {
       window.scrollTo(0, document.body.clientHeight)
     },
@@ -87,6 +118,7 @@ export default {
         this.msgs.push(`display-name=${this.$userProfile.displayName};user-type=:PRIVMSG:${this.userMessage}`)
         this.userMessage = ""
       }
+      this.$playSound(SndMsgSE, this.soundVolume.volume)
     },
     connect: function () {
       const self = this
@@ -106,6 +138,9 @@ export default {
           self.wss.send('PONG :tmi.twitch.tv\r\n')
         } else {
           self.msgs.push(event.data)
+          if (event.data.match(/PRIVMSG/)) {
+            self.$playSound(RcvMsgSE, self.soundVolume.volume)
+          }
         }
       }
     }
@@ -144,6 +179,9 @@ export default {
           }
         }
       )
+    },
+    applyVolume: function() {
+      return this.volumeLevel.filter(value => value.level === (this.soundVolume.level + 1) % 4)[0]
     }
   },
   watch: {
