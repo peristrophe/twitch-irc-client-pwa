@@ -25,13 +25,13 @@ jobs:
           ${{ runner.os }}-node-
 
     - name: install
-      run: npm ci
+      run: yarn install
 
     - name: test
-      run: npm test
+      run: yarn lint
 
     - name: generate
-      run: npm run generate
+      run: yarn generate
 
     - name: deploy
       uses: peaceiris/actions-gh-pages@v3
