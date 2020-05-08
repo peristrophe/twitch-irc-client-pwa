@@ -16,21 +16,18 @@ jobs:
       with:
         node-version: '13.x'
 
-    - name: Cache dependencies
-      uses: actions/cache@v1
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-
     - name: install
       run: yarn install
 
     - name: test
       run: yarn lint
 
-    - name: generate
+    - name: prepare
+      env:
+        CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
+      run: echo "NODE_ENV='production'\nVUE_APP_TWITCH_CLIENT_ID='$CLIENT_ID'" > .env.production
+
+    - name: build
       run: yarn build
 
     - name: deploy
