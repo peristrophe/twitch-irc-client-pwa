@@ -9,6 +9,9 @@ import base64url from "base64url"
 
 Vue.prototype.$http = axios
 Vue.prototype.$base64url = base64url
+Vue.prototype.$config = {
+  clientId: process.env.VUE_APP_TWITCH_CLIENT_ID,
+}
 
 Vue.prototype.$scheme = {
   main: "grey lighten-4",

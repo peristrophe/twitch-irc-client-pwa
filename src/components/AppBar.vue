@@ -137,7 +137,7 @@ export default {
     dialog: false,
 
     authParams: {
-      client_id: "122xg9vquuuq3zi6w610iibumg5j15",
+      client_id: null,
       redirect_uri: `${location.origin}/twitch-irc-client-pwa/`,
       response_type: [ "token", "id_token" ],
       scope: [ "chat:read", "chat:edit", "user:read:email", "openid" ],
@@ -188,6 +188,7 @@ export default {
     },
     queryParams: function () {
       const params = this.authParams
+      params.client_id = this.$config.clientId
 
       function serialize (key) {
         if (Object.prototype.toString.call(params[key]).indexOf("Array") != -1) {

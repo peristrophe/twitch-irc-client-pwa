@@ -50,9 +50,6 @@ export default {
     thumb: {
       width: 640,
       height: 360
-    },
-    apiParams: {
-      clientId: "122xg9vquuuq3zi6w610iibumg5j15"
     }
   }),
   components: {
@@ -63,7 +60,7 @@ export default {
   },
   methods: {
     fetchStreams: function () {
-      var customHeader = { headers: {"Client-ID": this.apiParams.clientId} }
+      var customHeader = { headers: { "Authorization": `Bearer ${this.$userProfile.pass}` } }
       this.$http.get("https://api.twitch.tv/helix/streams", customHeader)
                 .then(response => (this.streams = response.data.data))
     },
