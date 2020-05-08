@@ -7,26 +7,7 @@
     <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
     <v-toolbar-title>{{ $route.name }}</v-toolbar-title>
-
-    <template v-if="isChat">
-      <v-spacer></v-spacer>
-
-      <v-tooltip left>
-        <template v-slot:activator="{ on }">
-          <v-btn
-            v-model="autoScroll"
-            @click="autoScroll = !autoScroll"
-            :color="$scheme.main"
-            depressed
-            v-on="on"
-          >
-            <v-icon>mdi-transfer-down</v-icon>
-          </v-btn>
-        </template>
-      
-        <span>Auto Scroll</span>
-      </v-tooltip>
-    </template>
+    <slot></slot>
 
   </v-app-bar>
 
@@ -131,7 +112,6 @@ export default {
   name: "AppBar",
 
   data: () => ({
-    autoScroll: true,
     channel: "",
     drawer: false,
     dialog: false,
@@ -201,11 +181,6 @@ export default {
       }
 
       return Object.keys(this.authParams).map(serialize).join("&")
-    }
-  },
-  watch: {
-    autoScroll: function () {
-      this.$emit('switch-auto-scroll', this.autoScroll)
     }
   }
 }

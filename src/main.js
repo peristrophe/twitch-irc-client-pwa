@@ -10,7 +10,13 @@ import base64url from "base64url"
 Vue.prototype.$http = axios
 Vue.prototype.$base64url = base64url
 Vue.prototype.$config = {
-  clientId: process.env.VUE_APP_TWITCH_CLIENT_ID,
+  clientId: process.env.VUE_APP_TWITCH_CLIENT_ID
+}
+
+Vue.prototype.$playSound = (src, volume = 1.0) => {
+  var audio = new Audio(src)
+  audio.volume = volume
+  audio.play()
 }
 
 Vue.prototype.$scheme = {
