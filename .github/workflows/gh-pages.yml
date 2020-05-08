@@ -25,7 +25,7 @@ jobs:
     - name: prepare
       env:
         CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
-      run: echo "NODE_ENV='production'\nVUE_APP_TWITCH_CLIENT_ID='$CLIENT_ID'" > .env.production
+      run: echo -e "NODE_ENV='production'\nVUE_APP_TWITCH_CLIENT_ID='$CLIENT_ID'" > .env.production
 
     - name: show
       run: cat .env.production
