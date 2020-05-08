@@ -115,21 +115,8 @@ export default {
     channel: "",
     drawer: false,
     dialog: false,
-
-    authParams: {
-      client_id: null,
-      redirect_uri: `${location.origin}/twitch-irc-client-pwa/`,
-      response_type: [ "token", "id_token" ],
-      scope: [ "chat:read", "chat:edit", "user:read:email", "openid" ],
-      claims: {
-        id_token: {
-          email_verified: null,
-          picture: null,
-          preferred_username: null
-        }
-      }
-    }
   }),
+
   methods: {
     joinChannel: function () {
       this.$router.push({ name: "Chat", params: { channel: this.channel } })
@@ -149,6 +136,7 @@ export default {
       this.$router.push({ name: "Home" })
     }
   },
+
   computed: {
     isChat: function () {
       return this.$route.name == "Chat" ? true : false
@@ -167,8 +155,19 @@ export default {
       return `https://id.twitch.tv/oauth2/authorize?${this.queryParams}`
     },
     queryParams: function () {
-      const params = this.authParams
-      params.client_id = this.$config.clientId
+      var params = {
+        client_id: this.$config.clientId,
+        redirect_uri: `${location.origin}/twitch-irc-client-pwa/`,
+        response_type: [ "token", "id_token" ],
+        scope: [ "chat:read", "chat:edit", "user:read:email", "openid" ],
+        claims: {
+          id_token: {
+            email_verified: null,
+            picture: null,
+            preferred_username: null
+          }
+        }
+      }
 
       function serialize (key) {
         if (Object.prototype.toString.call(params[key]).indexOf("Array") != -1) {
@@ -180,7 +179,7 @@ export default {
         }
       }
 
-      return Object.keys(this.authParams).map(serialize).join("&")
+      return Object.keys(params).map(serialize).join("&")
     }
   }
 }
