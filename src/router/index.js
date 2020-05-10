@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '@/views/Home.vue'
+import Chat from '@/views/Chat.vue'
+import Auth from '@/utils/auth'
 
 Vue.use(VueRouter)
 
@@ -14,10 +16,14 @@ const routes = [
     path: '/chat/:channel',
     name: 'Chat',
     props: true,
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Chat.vue')
+    component: Chat,
+  },
+  {
+    path: '/auth',
+    name: 'Auth',
+    beforeEnter() {
+      window.location = Auth.URL
+    }
   }
 ]
 
