@@ -4,8 +4,9 @@
     <v-content>
       <v-container>
         <v-row dense>
+
           <v-col
-            v-for="(stream, index) in streams"
+            v-for="(stream, index) in contents.streams"
             :key="index"
             sm=6 md=4 lg=3 xl=2 cols=12
           >
@@ -15,16 +16,15 @@
               class="text-left"
               color="brown lighten-5"
               :elevation="hover ? 24 : 6"
-              @click="joinChannel(stream.user_id)"
+              @click="goChannel(stream.user_id)"
             >
               <v-img
-                :src="sizing(stream.thumbnail_url)"
+                :src="contents.resolveThumbSize(stream.thumbnail_url)"
                 class="align-end text-right"
-                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                 height=120
               >
-                <v-chip color="rgba(0,0,0,0)" class="amber--text">
-                  <v-icon color="amber">mdi-account-multiple</v-icon>
+                <v-chip v-if="stream.viewer_count !== null" label color="rgba(0,0,0,0.5)" class="amber--text ma-1">
+                  <v-icon left color="amber">mdi-account-multiple</v-icon>
                   <b>{{ stream.viewer_count }}</b>
                 </v-chip>
               </v-img>
@@ -34,6 +34,7 @@
               </template>
             </v-hover>
           </v-col>
+
         </v-row>
       </v-container>
     </v-content>
@@ -41,48 +42,38 @@
 </template>
 
 <script>
-import AppBar from '@/components/AppBar';
+import AppBar from '@/components/AppBar'
+import Contents from '@/utils/homeContents'
 
 export default {
   name: 'Home',
+
   data: () => ({
-    streams: [],
-    thumb: {
-      width: 640,
-      height: 360
-    }
+    contents: Contents,
   }),
+
   components: {
     AppBar
   },
+
   created: function () {
-    this.fetchStreams()
+    this.contents.profile = this.$auth.userProfile
+    if (this.$auth.isAuthenticated()) {
+      this.contents.fetchStreams()
+    }
   },
+
   methods: {
-    fetchStreams: function () {
-      var customHeader = { headers: { "Authorization": `Bearer ${this.$userProfile.pass}` } }
-      this.$http.get("https://api.twitch.tv/helix/streams", customHeader)
-                .then(response => (this.streams = response.data.data))
+    goAuth: function () {
+      this.$router.push({ name: "Auth" })
     },
-    sizing: function (src) {
-      return src.replace('{width}', `${this.thumb.width}`).replace('{height}', `${this.thumb.height}`)
-    },
-    joinChannel: async function (id) {
-      if (this.isLogedIn) {
-        var customHeader = { headers: {'Authorization': `Bearer ${this.$userProfile.pass}`} }
-        this.$http.get(`https://api.twitch.tv/helix/users?id=${id}`, customHeader)
-        .then(response => (this.$router.push({ name: "Chat", params: { channel: response.data.data[0].login } })))
-      }
-    },
-  },
-  computed: {
-    isLogedIn: function () {
-      if (this.$userProfile.id === "") {
-        return false
+    goChannel: function (userId) {
+      if (userId === null) {
+        this.goAuth()
       } else {
-        return true
+        this.contents.resolveChannel(userId, (res) => this.$router.push({ name: "Chat", params: { channel: res.data.data[0].login } }))
       }
-    },
+    }
   }
 }
 </script>

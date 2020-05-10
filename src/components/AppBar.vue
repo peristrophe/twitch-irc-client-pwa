@@ -22,14 +22,14 @@
     >
       <v-list-item-group>
         <v-list-item
-          v-if="isLogedIn"
-          @click="logOut"
+          v-if="$auth.isAuthenticated()"
+          @click="authReset"
         >
           <v-list-item-icon>
             <v-avatar
               size=24
             >
-              <img :src="$userProfile.picture" :alt="$userProfile.displayName"/>
+              <img :src="$auth.userProfile.picture" :alt="$auth.userProfile.nickname"/>
             </v-avatar>
           </v-list-item-icon>
           <v-list-item-title>Logout</v-list-item-title>
@@ -37,7 +37,7 @@
 
         <v-list-item
           v-else
-          :href="authURL"
+          :href="$auth.URL"
         >
           <v-list-item-icon>
             <v-icon>mdi-account</v-icon>
@@ -53,7 +53,6 @@
         </v-list-item>
 
         <v-list-item
-          :disabled="isHome"
           @click="goHome"
         >
           <v-list-item-icon><v-icon>mdi-home</v-icon></v-list-item-icon>
@@ -121,65 +120,18 @@ export default {
     joinChannel: function () {
       this.$router.push({ name: "Chat", params: { channel: this.channel } })
     },
-    logOut: function () {
-      this.drawer = false
-      this.$userProfile.id = ""
-      this.$userProfile.loginName = "justinfan12345"
-      this.$userProfile.displayName = "Anonymous User"
-      this.$userProfile.picture = ""
-      this.$userProfile.pass = ""
-      this.$userProfile.idToken = {}
-      document.location.hash = ""
+    authReset: function () {
+      this.$auth.reset()
       this.goHome()
     },
     goHome: function () {
-      this.$router.push({ name: "Home" })
+      this.$router.go({ name: "Home" })
     }
   },
 
   computed: {
-    isChat: function () {
-      return this.$route.name == "Chat" ? true : false
-    },
     isHome: function () {
       return this.$route.name == "Home" ? true : false
-    },
-    isLogedIn: function () {
-      if (this.$userProfile.id === "") {
-        return false
-      } else {
-        return true
-      }
-    },
-    authURL: function () {
-      return `https://id.twitch.tv/oauth2/authorize?${this.queryParams}`
-    },
-    queryParams: function () {
-      var params = {
-        client_id: this.$config.clientId,
-        redirect_uri: `${location.origin}/twitch-irc-client-pwa/`,
-        response_type: [ "token", "id_token" ],
-        scope: [ "chat:read", "chat:edit", "user:read:email", "openid" ],
-        claims: {
-          id_token: {
-            email_verified: null,
-            picture: null,
-            preferred_username: null
-          }
-        }
-      }
-
-      function serialize (key) {
-        if (Object.prototype.toString.call(params[key]).indexOf("Array") != -1) {
-          return key + "=" + params[key].join("+")
-        } else if (Object.prototype.toString.call(params[key]).indexOf("Object") != -1) {
-          return key + "=" + JSON.stringify(params[key])
-        } else {
-          return key + "=" + params[key]
-        }
-      }
-
-      return Object.keys(params).map(serialize).join("&")
     }
   }
 }
