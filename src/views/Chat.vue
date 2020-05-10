@@ -116,8 +116,7 @@ export default {
   },
 
   watch: {
-    'irc.prvSize': function (current, previous) {
-      console.log(`irc.prvSize: ${previous} -> ${current}`)
+    'irc.prvSize': function () {
       if (this.autoScrollFlag) {
         window.setTimeout(this.autoScroll, 100)
       }
