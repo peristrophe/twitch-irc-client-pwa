@@ -59,12 +59,6 @@ export default {
                 _this.prvSize = filterPriv(_this.rawMsgs).length
             }
         }
-        this.websock.onerror = function (event) {
-            console.log(event)
-        }
-        this.websock.onclose = function (event) {
-            console.log(event)
-        }
 
         this.channel = channel
     },
