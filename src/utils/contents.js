@@ -1,4 +1,5 @@
 import axios from 'axios'
+import config from '@/utils/config'
 import ThumbAuth from '@/assets/images/ThumbAuthPW.png'
 
 const sizeMap = [
@@ -26,17 +27,20 @@ export default {
     streams: defaultContents,
 
     fetchStreams: function () {
-        const customHeader = { headers: { "Authorization": `Bearer ${this.profile.pass}` } }
+        const customHeader = { headers: { "Client-ID": config.clientId, "Authorization": `Bearer ${this.profile.pass}` } }
         axios.get("https://api.twitch.tv/helix/streams", customHeader)
              .then(response => (this.streams = response.data.data))
     },
+
     resolveThumbSize: function (src, scale = 3) {
         return src.replace('{width}', `${pickSize(scale).width}`).replace('{height}', `${pickSize(scale).height}`)
     },
+
     resolveChannel: function (userId, callback) {
-        const customHeader = { headers: {'Authorization': `Bearer ${this.profile.pass}`} }
+        const customHeader = { headers: {"Client-ID": config.clientId, "Authorization": `Bearer ${this.profile.pass}`} }
         axios.get(`https://api.twitch.tv/helix/users?id=${userId}`, customHeader).then(callback)
     },
+
     idToChannel: function (userId) {
         const request = new XMLHttpRequest()
         request.open('GET', `https://api.twitch.tv/helix/users?id=${userId}`, false)
@@ -46,5 +50,9 @@ export default {
         return request.status === 200
             ? JSON.parse(request.responseText).data[0].login
             : null
+    },
+
+    reset: function () {
+        this.streams = defaultContents
     }
 }

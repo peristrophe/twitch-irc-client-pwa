@@ -43,13 +43,13 @@
 
 <script>
 import AppBar from '@/components/AppBar'
-import Contents from '@/utils/homeContents'
+import Contents from '@/utils/contents'
 
 export default {
   name: 'Home',
 
   data: () => ({
-    contents: Contents,
+    contents: Contents
   }),
 
   components: {
@@ -57,6 +57,7 @@ export default {
   },
 
   created: function () {
+    this.contents.reset()
     this.contents.profile = this.$auth.userProfile
     if (this.$auth.isAuthenticated()) {
       this.contents.fetchStreams()
