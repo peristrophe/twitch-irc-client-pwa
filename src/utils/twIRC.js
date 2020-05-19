@@ -64,9 +64,11 @@ export default {
     },
 
     exit: function (close = true) {
-        this.websock.send(`PART #${this.channel}`)
-        if (close) {
-            this.websock.close()
+        if (this.websock !== null) {
+            this.websock.send(`PART #${this.channel}`)
+            if (close) {
+                this.websock.close()
+            }
         }
     },
 
@@ -77,6 +79,11 @@ export default {
 
     chatlog: function () {
         return trimMsg(this.rawMsgs)
-    }
+    },
 
+    reset: function () {
+        this.rawMsgs = []
+        this.prvSize = 0
+        this.exit()
+    }
 }

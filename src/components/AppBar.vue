@@ -72,7 +72,7 @@
       <v-card-text class="text-justify">
         <p>Connecting to specified Twitch channel.</p>
         <v-text-field
-          v-model="channel"
+          v-model="dialogForm"
           outlined
           dense
           persistent-hint
@@ -80,6 +80,7 @@
           label="Channel"
           hint="In lowercase."
           append-icon="mdi-magnify"
+          @keydown.enter="joinChannel"
         >
         </v-text-field>
       </v-card-text>
@@ -111,21 +112,21 @@ export default {
   name: "AppBar",
 
   data: () => ({
-    channel: "",
+    dialogForm: "",
     drawer: false,
     dialog: false,
   }),
 
   methods: {
     joinChannel: function () {
-      this.$router.push({ name: "Chat", params: { channel: this.channel } })
+      this.$router.push({ name: "Chat", params: { channel: this.dialogForm } })
     },
     authReset: function () {
       this.$auth.reset()
       this.goHome()
     },
     goHome: function () {
-      this.$router.go({ name: "Home" })
+      this.$router.push({ name: "Home" })
     }
   },
 

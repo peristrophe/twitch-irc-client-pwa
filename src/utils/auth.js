@@ -64,10 +64,6 @@ export default {
     userProfile: defaultUserProfile,
     URL: createAuthURL(),
 
-    reset: function () {
-        document.location.hash = ""
-        this.userProfile = defaultUserProfile
-    },
     store: function () {
         var decoded = decodedIdToken()
         var hash = hashValues()
@@ -81,12 +77,18 @@ export default {
                 idToken: decoded
             }
 
-            var customHeader = { headers: {'Authorization': `Bearer ${this.userProfile.pass}`} }
+            var customHeader = { headers: {"Client-ID": config.clientId, "Authorization": `Bearer ${this.userProfile.pass}`} }
             axios.get(`https://api.twitch.tv/helix/users?id=${this.userProfile.id}`, customHeader)
                 .then(response => (this.userProfile.name = response.data.data[0].login))
         }
     },
+
     isAuthenticated: function () {
         return this.userProfile.id === "" ? false : true
-    }
+    },
+
+    reset: function () {
+        document.location.hash = ""
+        this.userProfile = defaultUserProfile
+    },
 }

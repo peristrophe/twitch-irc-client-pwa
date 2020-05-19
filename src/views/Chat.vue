@@ -67,6 +67,7 @@
               prepend-inner-icon="mdi-chat"
               append-outer-icon="mdi-telegram"
               @click:append-outer="sendMessage"
+              @keydown.enter="sendMessage"
             >
             </v-text-field>
           </v-col>
@@ -100,6 +101,7 @@ export default {
   },
 
   created: function () {
+    this.irc.reset()
     if (this.$props.channel !== null) {
       this.irc.join(this.$props.channel, this.$auth.userProfile)
     }
@@ -116,11 +118,13 @@ export default {
   },
 
   watch: {
-    'irc.prvSize': function () {
+    'irc.prvSize': function (current, previous) {
       if (this.autoScrollFlag) {
         window.setTimeout(this.autoScroll, 100)
       }
-      this.sound.play('RecieveMessage')
+      if (current > previous) {
+        this.sound.play('RecieveMessage')
+      }
     }
   }
 }
