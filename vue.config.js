@@ -2,7 +2,7 @@ module.exports = {
   "transpileDependencies": [
     "vuetify"
   ],
-  publicPath: '/twitch-irc-client-pwa',
+  publicPath: '/tirc',
   outputDir: 'docs',
   filenameHashing: false,
   productionSourceMap: false

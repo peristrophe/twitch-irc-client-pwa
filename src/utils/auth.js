@@ -16,7 +16,7 @@ const defaultUserProfile = {
 
 const authParams = {
     client_id: config.clientId,
-    redirect_uri: `${location.origin}/twitch-irc-client-pwa/`,
+    redirect_uri: `${location.origin}/tirc/`,
     response_type: [ "token", "id_token" ],
     scope: [ "chat:read", "chat:edit", "user:read:email", "openid" ],
     claims: {
