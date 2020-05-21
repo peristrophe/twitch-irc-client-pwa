@@ -1,6 +1,6 @@
 {
-  "name": "Twitch IRC Client",
-  "short_name": "TIC",
+  "name": "Tirc",
+  "short_name": "Tirc",
   "theme_color": "#FFF3E1",
   "icons": [
     {
