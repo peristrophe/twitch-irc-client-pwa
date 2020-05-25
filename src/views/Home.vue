@@ -42,11 +42,11 @@
 </template>
 
 <script>
-import AppBar from '@/components/AppBar'
-import Contents from '@/utils/contents'
+import AppBar from "@/components/AppBar"
+import Contents from "@/utils/contents"
 
 export default {
-  name: 'Home',
+  name: "Home",
 
   data: () => ({
     contents: Contents

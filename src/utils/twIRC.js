@@ -10,11 +10,11 @@ const filterPriv = (msg) => msg
     .filter(
         (value) => value.match(/PRIVMSG/)
     ).map(
-        (value) => value.split(';')
+        (value) => value.split(";")
     ).map((value) => value
         .map((value) => {
             var dict = {}
-            dict[value.split('=')[0]] = value.substr(value.indexOf('=')+1)
+            dict[value.split("=")[0]] = value.substr(value.indexOf("=")+1)
             return dict
         })
     ).map(
@@ -25,8 +25,8 @@ const trimMsg = (msg) => filterPriv(msg)
     .map(
         (value) => (
             {
-                username: value['display-name'],
-                content: value['user-type'].split(':').slice(2).join(':')
+                username: value["display-name"],
+                content: value["user-type"].split(":").slice(2).join(":")
             }
         )
     )
@@ -46,14 +46,14 @@ export default {
         this.websock = new WebSocket("wss://irc-ws.chat.twitch.tv:443")
 
         this.websock.onopen = function () {
-            _this.websock.send('CAP REQ :twitch.tv/tags twitch.tv/commands\r\n')
+            _this.websock.send("CAP REQ :twitch.tv/tags twitch.tv/commands\r\n")
             _this.websock.send(`PASS oauth:${profile.pass}\r\n`)
             _this.websock.send(`NICK ${profile.name}\r\n`)
             _this.websock.send(`JOIN #${channel}\r\n`)
         }
         this.websock.onmessage = function (event) {
-            if (event.data.startsWith('PING')) {
-                _this.websock.send('PONG :tmi.twitch.tv\r\n')
+            if (event.data.startsWith("PING")) {
+                _this.websock.send("PONG :tmi.twitch.tv\r\n")
             } else {
                 _this.rawMsgs.push(event.data)
                 _this.prvSize = filterPriv(_this.rawMsgs).length

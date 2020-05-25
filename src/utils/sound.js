@@ -1,9 +1,9 @@
-import SndMsgSE from '@/assets/sounds/SoundEffect001.mp3'
-import RcvMsgSE from '@/assets/sounds/SoundEffect002.mp3'
+import SndMsgSE from "@/assets/sounds/SoundEffect001.mp3"
+import RcvMsgSE from "@/assets/sounds/SoundEffect002.mp3"
 
 const resourceMap = [
-    { id: 'SendMessage',    src: SndMsgSE },
-    { id: 'RecieveMessage', src: RcvMsgSE },
+    { id: "SendMessage",    src: SndMsgSE },
+    { id: "RecieveMessage", src: RcvMsgSE },
 ]
 
 const volumeMap = [
