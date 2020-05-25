@@ -78,15 +78,15 @@
 </template>
 
 <script>
-import AppBar from '@/components/AppBar'
-import IRC from '@/utils/twIRC'
-import Sound from '@/utils/sound'
+import AppBar from "@/components/AppBar"
+import IRC from "@/utils/twIRC"
+import Sound from "@/utils/sound"
 
 export default {
-  name: 'Chat',
+  name: "Chat",
 
   data: () => ({
-    postMessage: '',
+    postMessage: "",
     autoScrollFlag: true,
     irc: IRC,
     sound: Sound,
@@ -113,7 +113,7 @@ export default {
     },
     sendMessage: function () {
       this.irc.post(this.postMessage, this.$auth.userProfile)
-      this.sound.play('SendMessage')
+      this.sound.play("SendMessage")
     }
   },
 
@@ -123,7 +123,7 @@ export default {
         window.setTimeout(this.autoScroll, 100)
       }
       if (current > previous) {
-        this.sound.play('RecieveMessage')
+        this.sound.play("RecieveMessage")
       }
     }
   }

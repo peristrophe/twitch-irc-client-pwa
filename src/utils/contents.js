@@ -1,6 +1,6 @@
-import axios from 'axios'
-import config from '@/utils/config'
-import ThumbAuth from '@/assets/images/ThumbAuthPW.png'
+import axios from "axios"
+import config from "@/utils/config"
+import ThumbAuth from "@/assets/images/ThumbAuthPW.png"
 
 const sizeMap = [
     { scale: 1, width: 320,  height: 180  },
@@ -33,7 +33,7 @@ export default {
     },
 
     resolveThumbSize: function (src, scale = 3) {
-        return src.replace('{width}', `${pickSize(scale).width}`).replace('{height}', `${pickSize(scale).height}`)
+        return src.replace("{width}", `${pickSize(scale).width}`).replace("{height}", `${pickSize(scale).height}`)
     },
 
     resolveChannel: function (userId, callback) {
@@ -43,8 +43,8 @@ export default {
 
     idToChannel: function (userId) {
         const request = new XMLHttpRequest()
-        request.open('GET', `https://api.twitch.tv/helix/users?id=${userId}`, false)
-        request.setRequestHeader('Authorization', `Bearer ${this.profile.pass}`)
+        request.open("GET", `https://api.twitch.tv/helix/users?id=${userId}`, false)
+        request.setRequestHeader("Authorization", `Bearer ${this.profile.pass}`)
         request.send(null)
 
         return request.status === 200

@@ -42,7 +42,7 @@ const createAuthURL = () => authBase + Object.keys(authParams).map(serialize).jo
 
 const hashValues = () => {
     try {
-        return document.location.hash.slice(1).split('&').map(function (value) {
+        return document.location.hash.slice(1).split("&").map(function (value) {
                 var dic = {}
                 dic[value.split('=')[0]] = value.split('=')[1]
                 return dic
@@ -54,7 +54,7 @@ const hashValues = () => {
 
 const decodedIdToken = () => {
     try {
-        return JSON.parse(base64url.decode(hashValues().id_token.split('.')[1]))
+        return JSON.parse(base64url.decode(hashValues().id_token.split(".")[1]))
     } catch(e) {
         return null
     }
